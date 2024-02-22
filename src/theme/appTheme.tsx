@@ -1,7 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     glovalMargin: {
-        marginHorizontal: 20,
+        marginHorizontal: 10,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'black',
     },
 });

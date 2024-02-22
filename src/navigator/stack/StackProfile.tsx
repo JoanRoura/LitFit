@@ -11,9 +11,6 @@ export const StackProfile = () => {
     <Stack.Navigator
         screenOptions={{
             headerShown: false,
-            cardStyle: {
-                backgroundColor: 'white',
-            },
         }}
     >
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
