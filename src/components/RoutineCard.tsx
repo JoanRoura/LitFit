@@ -3,15 +3,15 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Routine } from '../interfaces/routineInterface';
 
 const windowWidth = Dimensions.get('window').width;
 
 interface Props {
-    // routine:  Routine;
-    name: string; // TODO: Canviar el 'name' per tot el objecte de Rutina
+    routine: Routine;
 }
 
-export const RoutineCard = ({ name }: Props) => {
+export const RoutineCard = ({ routine }: Props) => {
 
     const navigation = useNavigation<any>();
 
@@ -20,7 +20,7 @@ export const RoutineCard = ({ name }: Props) => {
         <TouchableOpacity
             activeOpacity={0.5}
             onPress={ () =>
-                navigation.navigate('RoutineDetailsScreen', name) // TODO: Canviar per Routine
+                navigation.navigate('RoutineDetailsScreen', routine) // TODO: Canviar per Routine
             }
         >
             <View style={{
@@ -32,7 +32,7 @@ export const RoutineCard = ({ name }: Props) => {
                 {/* Nom del Pokemon i ID */}
                 <View>
                     <Text style={ routineCardStyles.nameRoutine }>
-                        { name }
+                        { routine.name }
                     </Text>
                 </View>
 

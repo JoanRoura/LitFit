@@ -72,7 +72,7 @@ export const RoutineScreen = () => {
                 {/* Mostrem el llistat de les rutines, i a la vegada fem un 'Infinite Scroll' */}
                 <FlatList
                     data={routines}
-                    keyExtractor={(routine) => routine.id}
+                    keyExtractor={(routine) => routine.id.toString()}
                     showsVerticalScrollIndicator={false}
 
                     // * Header del FlatList
@@ -90,7 +90,7 @@ export const RoutineScreen = () => {
                         </Text>
                     )}
 
-                    renderItem={({ item }) => <RoutineCard name={ item.name } />}
+                    renderItem={({ item }) => <RoutineCard routine={ item } />}
 
                     // * Configuracio del 'Infinite Scroll'
                     //   onEndReached={ loadPokemons }
