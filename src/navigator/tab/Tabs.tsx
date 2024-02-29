@@ -23,7 +23,7 @@ export const Tabs = () => {
         },
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: 'rgba(255,255,255, 0.92)',
+          backgroundColor: 'rgba(255,255,255, 1)',
           borderWidth: 0,
           elevation: 0,
           height: (Platform.OS === 'ios') ? 80 : 60,
@@ -96,7 +96,7 @@ export const Tabs = () => {
         name="StackProfile"
         component={StackProfile}
         options={{
-          tabBarLabel: 'Routine',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (
             <Icon
               color={color}

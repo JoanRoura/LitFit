@@ -1,19 +1,56 @@
-/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable react-native/no-inline-styles */
 import 'react-native-url-polyfill/auto';
-import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Button, FlatList, Platform, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useRoutines } from '../../hooks/useRoutines';
 import { styles } from '../../theme/appTheme';
 import { RoutineCard } from '../../components/RoutineCard';
 
-
 export const RoutineScreen = () => {
 
     const { top } = useSafeAreaInsets();
 
+    // ? Insercio dels exercicis de una API rest a la meva DB
+    // const postExercises = async () => {
+    //     try {
+    //         const exercisesWithId = exercises.map((ex, i) => {
+    //             // Elimina los campos no deseados
+    //             const { 'Beginner Sets': _, 'Intermediate Sets': __, 'Expert Sets': ___, ...rest } = ex;
+
+    //             // Mapea los nombres de campo según tus requisitos
+    //             const newExercise: Exercise = {
+    //                 // id: i + 1, // Asigna un id aleatorio o según tu lógica
+    //                 name: rest.WorkOut,
+    //                 desc: rest.Explaination,
+    //                 longDesc: rest['Long Explanation'],
+    //                 muscle: rest.Muscles as MuscleType, // Asegúrate de que coincida con los tipos definidos en la interfaz
+    //                 equipment: rest.Equipment,
+    //                 video: rest.Video,
+    //                 intensityLevel: rest.Intensity_Level as IntensityLevelType, // Asegúrate de que coincida con los tipos definidos en la interfaz
+    //             };
+
+    //             return newExercise;
+    //         });
+
+    //         // Ejecuta la inserción y captura la respuesta
+    //         const { data, error } = await supabase.from('exercises').insert(exercisesWithId).select();
+
+
+    //         if (error) {
+    //             console.error('Error al insertar los registros:', error);
+    //         } else {
+    //             console.log('Registros insertados correctamente:', data);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error general:', error);
+    //     }
+    // };
+
+    // ? Conexio a la base de dades directament amb els metodes que et proporciona supabase
     // const fetchUsersData = async () => {
     //     try {
     //         const { data, error } = await supabase
@@ -32,6 +69,7 @@ export const RoutineScreen = () => {
     //     }
     // };
 
+    // ? Conexio a la base de dades, fent us de axios (una request HTTP)
     // const fetchUsersData = async () => {
     //     try {
     //         const response = await fetch(
@@ -67,7 +105,10 @@ export const RoutineScreen = () => {
     return (
         <>
             <View
-                style={ routineStyles.container }
+                style={{
+                    ...routineStyles.container,
+                    marginBottom: (Platform.OS === 'ios') ? 80 : 60,
+                }}
             >
                 {/* Mostrem el llistat de les rutines, i a la vegada fem un 'Infinite Scroll' */}
                 <FlatList
@@ -81,8 +122,8 @@ export const RoutineScreen = () => {
                             style={{
                                 ...styles.title,
                                 ...styles.glovalMargin,
-                                top: top + 20,
-                                marginBottom: top + 20,
+                                top: top + 15,
+                                marginBottom: top + 15,
                                 paddingBottom: 15,
                             }}
                         >
@@ -90,20 +131,20 @@ export const RoutineScreen = () => {
                         </Text>
                     )}
 
-                    renderItem={({ item }) => <RoutineCard routine={ item } />}
+                    renderItem={({ item }) => <RoutineCard routine={item} />}
 
-                    // * Configuracio del 'Infinite Scroll'
-                    //   onEndReached={ loadPokemons }
-                    //   onEndReachedThreshold={ 0.4 }
+                // * Configuracio del 'Infinite Scroll'
+                //   onEndReached={ loadPokemons }
+                //   onEndReachedThreshold={ 0.4 }
 
-                    // * Implementacio de '<ActivityIndicator>' mentres es carrgant els proxim
-                    // ListFooterComponent={(
-                    //     <ActivityIndicator
-                    //         style={{ height: 100 }}
-                    //         size={20}
-                    //         color="grey"
-                    //     />
-                    // )}
+                // * Implementacio de '<ActivityIndicator>' mentres es carrgant els proxim
+                // ListFooterComponent={(
+                //     <ActivityIndicator
+                //         style={{ height: 100 }}
+                //         size={20}
+                //         color="grey"
+                //     />
+                // )}
                 />
             </View>
         </>
