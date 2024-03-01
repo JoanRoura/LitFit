@@ -1,4 +1,4 @@
-package com.litfit
+package com.joanroura.litfit
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity

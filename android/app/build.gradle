@@ -80,9 +80,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.litfit"
+    namespace "com.joanroura.litfit"
     defaultConfig {
-        applicationId "com.litfit"
+        applicationId "com.joanroura.litfit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package com.litfit
+package com.joanroura.litfit
 
 import android.app.Application
 import com.facebook.react.PackageList
