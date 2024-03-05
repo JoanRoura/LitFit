@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { Exercise } from '../interfaces/exerciseInterface';
-import { supabase } from '../database/Supabase';
+import { supabase } from '../database/supabase';
 
 export const useExercise = (idRoutine: number) => {
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Routine } from '../interfaces/routineInterface';
-import { supabase } from '../database/Supabase';
+import { supabase } from '../database/supabase';
 
 export const useRoutines = () => {
 
