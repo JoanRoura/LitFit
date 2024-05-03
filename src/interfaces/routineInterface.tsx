@@ -5,4 +5,7 @@ export interface Routine {
     name:       string;
     id_user:    number;
     is_default: boolean;
+    muscle:     string;
+    desc:       string;
+    image:      string;
 }

@@ -1,12 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { Exercise } from '../interfaces/exerciseInterface';
 import { supabase } from '../database/supabase';
 
-export const useExercise = (idRoutine: number) => {
+export const useExercise = () => {
 
+    const [isLoading, setIsLoading] = useState(true);
     const [exercises, setExercises] = useState<Exercise[]>([]);
-    const [exercisesByRoutine, setExercisesByRoutine] = useState<Exercise[]>([]);
 
     // * Obtenir tots els exercisis
     const getExercises = async () => {
@@ -20,6 +19,7 @@ export const useExercise = (idRoutine: number) => {
                 console.error('Error getting all exercises:', error.message);
             } else {
                 setExercises(data);
+                setIsLoading(false);
             }
 
         } catch (error: any) {
@@ -28,35 +28,12 @@ export const useExercise = (idRoutine: number) => {
 
     };
 
-    // * Obtenir els exercisis asosicats a una rutina en especific
-    const getExercisesByRoutine = async () => {
-
-        try {
-            const { data, error } = await supabase
-                .from('routines')
-                .select('exercises(*)')
-                .eq('id', idRoutine);
-
-            if (error) {
-                console.error('Error getting exercises by routine: ', error.message);
-            } else {
-                if (data && data.length > 0 && data[0].exercises) {
-                    setExercisesByRoutine(data[0].exercises);
-                }
-            }
-
-        } catch (error: any) {
-            console.error('Error in getExercisesByRoutine:', error.message);
-        }
-    };
-
     useEffect(() => {
         getExercises();
-        getExercisesByRoutine();
     }, []);
 
     return {
+        isLoading,
         exercises,
-        exercisesByRoutine,
     };
 };

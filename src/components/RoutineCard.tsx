@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Routine } from '../interfaces/routineInterface';
-import { useExercise } from '../hooks/useExercise';
-import { styles } from '../theme/appTheme';
+import { appStyles } from '../theme/appTheme';
+import { useExercisesByRoutine } from '../hooks/useExercisesByRoutine';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -17,7 +17,9 @@ export const RoutineCard = ({ routine }: Props) => {
 
     const navigation = useNavigation<any>();
 
-    const { exercisesByRoutine } = useExercise(routine.id);
+    const { exercisesByRoutine } = useExercisesByRoutine(routine.id);
+
+    // const setsAvailable = sets?.length > 0;
 
     return (
         <TouchableOpacity
@@ -36,28 +38,53 @@ export const RoutineCard = ({ routine }: Props) => {
                 <View style={routineCardStyles.nameConatainer}>
                     <Text
                         style={{
-                            ...styles.text,
+                            ...appStyles.text,
                             ...routineCardStyles.nameRoutine,
                         }}
                     >
                         {routine.name}
                     </Text>
 
-                    <Text style={styles.text}>
+                    <Text style={appStyles.text}>
                         {exercisesByRoutine.length} exercises
                     </Text>
                 </View>
 
-                <View>
+                {/* Exercisis de la rutina  */}
+                {/* <View>
                     {exercisesByRoutine.slice(0, 3).map((exercise) => (
                         <Text
                             style={styles.text}
                             key={exercise.id}
                         >
-                            {exercise.name}
+                            {exercise.name} 4X8
                         </Text>
                     ))}
+                </View> */}
+                <View>
+                    {exercisesByRoutine.slice(0, 4).map((exercise) => (
+                        <View key={exercise.id} style={routineCardStyles.containerExercisesSets}>
+                            <Text style={routineCardStyles.textNameExercise}>{exercise.name}</Text>
+                            <View style={{ flex: 1 }} />
+                            <Text style={routineCardStyles.textSets}>4x8</Text>
+                        </View>
+                    ))}
                 </View>
+
+                {/* Mostra les series per cada exercici */}
+                {/* <View>
+                    {setsAvailable && (
+                        <View>
+                            {sets.map((set: any, index: any) => (
+                                <Text key={index} style={styles.text}>
+                                    {`Set ${index + 1}: ${set.reps} reps`}
+                                </Text>
+                            ))}
+                        </View>
+                    )}
+                </View> */}
+
+                {/* <ExerciseList exercises={exercisesByRoutine} /> */}
 
             </View>
         </TouchableOpacity>
@@ -77,12 +104,24 @@ const routineCardStyles = StyleSheet.create({
     },
 
     nameConatainer: {
-        backgroundColor: 'red',
-        marginBottom: 20,
+        // backgroundColor: 'red',
+        marginBottom: 18,
         // flexDirection: 'row',
     },
     nameRoutine: {
         fontSize: 20,
+        fontWeight: 'bold',
+    },
+    containerExercisesSets: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginBottom: 6,
+    },
+    textNameExercise: {
+        color: '#000',
+    },
+    textSets: {
+        color: '#000',
         fontWeight: 'bold',
     },
 });

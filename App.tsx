@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-shadow */
 import 'react-native-gesture-handler';
 
@@ -10,6 +11,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { StackMain } from './src/navigator/stack/StackMain';
 import { supabase } from './src/database/supabase';
+import { Tabs } from './src/navigator/tab/Tabs';
 // import { Tabs } from './src/navigator/tab/Tabs';
 
 const App = () => {
@@ -27,11 +29,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <StackMain />
-      <Text style={{ marginBottom: 400 }}>
+      {/* <StackMain />
+      <Text style={{ marginBottom: 200 }}>
         {session && session.user && <Text>{session.user.id}</Text>}
-      </Text>
-      {/* <Tabs /> */}
+      </Text> */}
+      <Tabs />
     </NavigationContainer>
   );
 };

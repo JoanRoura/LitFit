@@ -7,7 +7,7 @@ import { Button, FlatList, Platform, StyleSheet, Text, View } from 'react-native
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useRoutines } from '../../hooks/useRoutines';
-import { styles } from '../../theme/appTheme';
+import { appStyles } from '../../theme/appTheme';
 import { RoutineCard } from '../../components/RoutineCard';
 
 export const RoutineScreen = () => {
@@ -100,7 +100,7 @@ export const RoutineScreen = () => {
     //     fetchUsersData();
     // }, []);
 
-    const { routines } = useRoutines();
+    const { defaultRoutines } = useRoutines();
 
     return (
         <>
@@ -110,9 +110,8 @@ export const RoutineScreen = () => {
                     marginBottom: (Platform.OS === 'ios') ? 80 : 60,
                 }}
             >
-                {/* Mostrem el llistat de les rutines, i a la vegada fem un 'Infinite Scroll' */}
                 <FlatList
-                    data={routines}
+                    data={defaultRoutines}
                     keyExtractor={(routine) => routine.id.toString()}
                     showsVerticalScrollIndicator={false}
 
@@ -120,8 +119,8 @@ export const RoutineScreen = () => {
                     ListHeaderComponent={(
                         <Text
                             style={{
-                                ...styles.title,
-                                ...styles.glovalMargin,
+                                ...appStyles.title,
+                                ...appStyles.glovalMargin,
                                 top: top + 15,
                                 marginBottom: top + 15,
                                 paddingBottom: 15,
@@ -132,19 +131,6 @@ export const RoutineScreen = () => {
                     )}
 
                     renderItem={({ item }) => <RoutineCard routine={item} />}
-
-                // * Configuracio del 'Infinite Scroll'
-                //   onEndReached={ loadPokemons }
-                //   onEndReachedThreshold={ 0.4 }
-
-                // * Implementacio de '<ActivityIndicator>' mentres es carrgant els proxim
-                // ListFooterComponent={(
-                //     <ActivityIndicator
-                //         style={{ height: 100 }}
-                //         size={20}
-                //         color="grey"
-                //     />
-                // )}
                 />
             </View>
         </>
