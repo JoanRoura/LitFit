@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Platform, ActivityIndicator } from 'react-native';
 import { SearchInput } from '../../components/SearchInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Exercise } from '../../interfaces/exerciseInterface';
@@ -10,9 +10,9 @@ import { Loading } from '../../components/Loading';
 import { appStyles } from '../../theme/appTheme';
 
 export const ExerciseScreen = () => {
-    const {top} = useSafeAreaInsets();
+    const { top } = useSafeAreaInsets();
 
-    const {isLoading, exercises} = useExercise();
+    const { isLoading, getExercises, exercises } = useExercise();
 
     const [exercisesFiltered, setExercisesFiltered] = useState<Exercise[]>([]);
 
@@ -53,17 +53,29 @@ export const ExerciseScreen = () => {
 
                 <SearchInput
                     onDebounce={(value) => setTerm(value)}
-                    style={{}}
                 />
             </View>
 
-
             <FlatList
-                data={exercisesFiltered}
+                data={term ? exercisesFiltered : exercises}
                 keyExtractor={(exercise) => exercise.id!.toString()}
                 showsVerticalScrollIndicator={false}
                 numColumns={1}
+                style={{ marginBottom: (Platform.OS === 'ios') ? 80 : 60 }}
                 renderItem={({ item }) => <ExerciseCard exercise={item} />}
+
+                // * Configuracio del 'Infinite Scroll'
+                onEndReached={getExercises}
+                onEndReachedThreshold={0.4}
+
+                // * Implementacio de '<ActivityIndicator>' mentres es carrgant els proxim
+                ListFooterComponent={(
+                    <ActivityIndicator
+                        style={{ height: 100 }}
+                        size={20}
+                        color="grey"
+                    />
+                )}
             />
 
         </View>
@@ -74,7 +86,7 @@ const exerciseStyles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
-        gap: 24,
+        gap: 10,
     },
     inputContainer: {
         display: 'flex',

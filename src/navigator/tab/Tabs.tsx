@@ -77,7 +77,7 @@ export const Tabs = () => {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="StackMap"
         component={StackMap}
         options={{
@@ -90,7 +90,7 @@ export const Tabs = () => {
             />
           ),
         }}
-      />
+      /> */}
 
       <Tab.Screen
         name="StackProfile"

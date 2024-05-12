@@ -62,8 +62,8 @@ export const useRoutines = () => {
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'routines' },
                 (payload) => {
-                    // console.log('Objecte anterior: ', payload.old);
-                    // console.log('Objecte nou: ', payload.new);
+                    console.log('Objecte anterior: ', payload.old);
+                    console.log('Objecte nou: ', payload.new);
                     // console.log('Change received!', payload.new);
 
                     // ? Actualitza les ruitines si hi ha algun canvi a la base de dades
@@ -82,6 +82,7 @@ export const useRoutines = () => {
     return {
         isLoading,
         routines,
+        getDefaultRoutines,
         defaultRoutines,
     };
 };

@@ -1,33 +1,67 @@
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Exercise } from '../interfaces/exerciseInterface';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { ExerciseDetails } from './ExerciseDetails';
 
 interface Props {
     exercise: Exercise;
 }
 
-export const ExerciseCard = ({exercise}: Props) => {
+export const ExerciseCard = ({ exercise }: Props) => {
 
-    console.log(exercise.image);
+    const navigation = useNavigation<any>();
 
-  return (
-    <TouchableOpacity activeOpacity={0.7} style={exerciseCardStyles.container}>
-        <View style={exerciseCardStyles.containerImage}>
-            <Image
-                resizeMode="contain"
-                source={{uri: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif'}}
-                style={exerciseCardStyles.imageExercise}
-            />
+    const [bgModalName, setBgModalName] = useState(false);
+
+    const [modalExercisesVisible, setModalExercisesVisible] = useState(false);
+
+    return (
+        <View>
+            <TouchableOpacity
+                activeOpacity={0.7}
+                style={exerciseCardStyles.container}
+                // onPress={() => navigation.navigate('ExerciseDetailScreen', exercise)}
+                onPress={() => setModalExercisesVisible(true)}
+            >
+                <View style={exerciseCardStyles.containerImage}>
+                    {exercise.image && (
+                        <Image
+                            resizeMode="contain"
+                            source={{ uri: exercise.image }}
+                            style={exerciseCardStyles.imageExercise}
+                        />
+                    )}
+                </View>
+
+                <View style={exerciseCardStyles.containerInfoExercise}>
+                    <Text style={exerciseCardStyles.textNameExercise}>{exercise.name}</Text>
+
+                    <Text style={exerciseCardStyles.textSetsExercise}>4 sets x 8 reps</Text>
+                </View>
+            </TouchableOpacity>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalExercisesVisible}
+                onRequestClose={() => {
+                    setModalExercisesVisible(!modalExercisesVisible);
+                }}
+            >
+                <TouchableWithoutFeedback onPress={() => setBgModalName(false)}>
+
+                    <View style={exerciseCardStyles.fullScreenOverlay}>
+                        <View style={exerciseCardStyles.modalExercisesView}>
+                            <ExerciseDetails exercise={exercise} />
+                        </View>
+                    </View>
+
+                </TouchableWithoutFeedback>
+            </Modal>
         </View>
-
-        <View style={exerciseCardStyles.containerInfoExercise}>
-            <Text style={exerciseCardStyles.textNameExercise}>{exercise.name}</Text>
-
-            <Text style={exerciseCardStyles.textSetsExercise}>4 sets x 8 reps</Text>
-        </View>
-    </TouchableOpacity>
-  );
+    );
 };
 
 const exerciseCardStyles = StyleSheet.create({
@@ -66,5 +100,19 @@ const exerciseCardStyles = StyleSheet.create({
     textSetsExercise: {
         color: '#000',
         fontSize: 14,
+    },
+
+    fullScreenOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'flex-end',
+    },
+    modalExercisesView: {
+        flex: 1,
+        marginTop: 50,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        backgroundColor: "#e1e1e1",
+        overflow: 'hidden',
     },
 });

@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Routine } from '../interfaces/routineInterface';
 import { appStyles } from '../theme/appTheme';
 import { useExercisesByRoutine } from '../hooks/useExercisesByRoutine';
+import { Image } from 'react-native-elements';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -17,15 +18,15 @@ export const RoutineCard = ({ routine }: Props) => {
 
     const navigation = useNavigation<any>();
 
-    const { exercisesByRoutine } = useExercisesByRoutine(routine.id);
+    const { exercisesByRoutine } = useExercisesByRoutine(routine.id!);
 
     // const setsAvailable = sets?.length > 0;
 
     return (
         <TouchableOpacity
-            activeOpacity={0.5}
+            activeOpacity={0.7}
             onPress={() =>
-                navigation.navigate('RoutineDetailsScreen', routine) // TODO: Canviar per Routine
+                navigation.navigate('RoutineDetailsScreen', routine)
             }
         >
             <View style={{
@@ -35,19 +36,32 @@ export const RoutineCard = ({ routine }: Props) => {
             }}>
 
                 {/* Nom de la Routine i numero de exersis que te */}
-                <View style={routineCardStyles.nameConatainer}>
-                    <Text
-                        style={{
-                            ...appStyles.text,
-                            ...routineCardStyles.nameRoutine,
-                        }}
-                    >
-                        {routine.name}
-                    </Text>
+                <View style={routineCardStyles.containerTopCard}>
+                    <View style={routineCardStyles.nameConatainer}>
+                        <Text
+                            style={{
+                                ...appStyles.text,
+                                ...routineCardStyles.nameRoutine,
+                            }}
+                        >
+                            {routine.name}
+                        </Text>
 
-                    <Text style={appStyles.text}>
-                        {exercisesByRoutine.length} exercises
-                    </Text>
+                        <Text style={appStyles.text}>
+                            {exercisesByRoutine.length} exercises
+                        </Text>
+                    </View>
+
+                    <View style={routineCardStyles.containerImage}>
+                        {routine.image && (
+                            <Image
+                                resizeMode="contain"
+                                source={{ uri: routine.image }}
+                                style={routineCardStyles.imageRoutine}
+                            />
+                        )}
+                    </View>
+
                 </View>
 
                 {/* Exercisis de la rutina  */}
@@ -102,11 +116,22 @@ const routineCardStyles = StyleSheet.create({
         paddingVertical: 20,
         paddingHorizontal: 15,
     },
+    containerTopCard: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
 
+    containerImage: {
+        width: 60,
+        height: 60,
+    },
+    imageRoutine: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 50,
+    },
     nameConatainer: {
-        // backgroundColor: 'red',
         marginBottom: 18,
-        // flexDirection: 'row',
     },
     nameRoutine: {
         fontSize: 20,

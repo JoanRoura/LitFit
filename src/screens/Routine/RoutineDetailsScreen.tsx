@@ -23,7 +23,7 @@ export const RoutineDetailsScreen = ({ navigation, route }: Props) => {
 
   const { id: idRoutine } = route.params;
 
-  const { exercisesByRoutine } = useExercisesByRoutine(idRoutine);
+  const { exercisesByRoutine } = useExercisesByRoutine(idRoutine!);
 
   return (
     <>
@@ -33,8 +33,6 @@ export const RoutineDetailsScreen = ({ navigation, route }: Props) => {
           marginBottom: (Platform.OS === 'ios') ? 80 : 60,
         }}
       >
-
-        {/* Boton de 'Go Back' */}
         <TouchableOpacity
           style={{
             ...routineDetailsStyles.backButton,
@@ -51,21 +49,18 @@ export const RoutineDetailsScreen = ({ navigation, route }: Props) => {
         </TouchableOpacity>
 
         <View style={routineDetailsStyles.containerTitleImageRoutine}>
-          <View style={ routineDetailsStyles.containerTitleRoutine }>
-            <Text style={ routineDetailsStyles.routineTitle }>{ route.params.name }</Text>
+          <View style={routineDetailsStyles.containerTitleRoutine}>
+            <Text style={routineDetailsStyles.routineTitle}>{route.params.name}</Text>
           </View>
 
           <View style={routineDetailsStyles.containerImage}>
             <Image
-              resizeMode="contain"
-              source={ require('../../assets/images/bench_press.jpeg')}
-              style={ routineDetailsStyles.routineImage }
+              resizeMode="cover"
+              source={{ uri: route.params.image! }}
+              style={routineDetailsStyles.routineImage}
             />
           </View>
         </View>
-
-        {/* // TODO: Valora on queda millor el component  */}
-        {/* <RoutineProfileCard routine={route.params} /> */}
 
         <FlatList
           data={exercisesByRoutine}
@@ -122,8 +117,8 @@ const routineDetailsStyles = StyleSheet.create({
     height: 100,
   },
   routineImage: {
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: '100%',
     borderRadius: 50,
   },
 

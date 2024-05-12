@@ -34,6 +34,7 @@ export const useExercise = () => {
 
     return {
         isLoading,
+        getExercises,
         exercises,
     };
 };

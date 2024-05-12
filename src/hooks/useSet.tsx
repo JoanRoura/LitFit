@@ -30,8 +30,6 @@ export const useSet = (exerciseId: number) => {
                 return;
             }
 
-            console.log(setsData);
-
             setSets(setsData || []);
         } catch (error: any) {
             console.error('Error in getSetsByExercise:', error.message);
@@ -39,7 +37,7 @@ export const useSet = (exerciseId: number) => {
     };
 
     useEffect(() => {
-      getSetsByExercise();
+        getSetsByExercise();
     }, []);
 
     return {

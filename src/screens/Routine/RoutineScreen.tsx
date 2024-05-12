@@ -3,7 +3,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import 'react-native-url-polyfill/auto';
 import React, { useEffect } from 'react';
-import { Button, FlatList, Platform, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, Platform, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useRoutines } from '../../hooks/useRoutines';
@@ -100,7 +100,7 @@ export const RoutineScreen = () => {
     //     fetchUsersData();
     // }, []);
 
-    const { defaultRoutines } = useRoutines();
+    const { getDefaultRoutines, defaultRoutines } = useRoutines();
 
     return (
         <>
@@ -110,28 +110,43 @@ export const RoutineScreen = () => {
                     marginBottom: (Platform.OS === 'ios') ? 80 : 60,
                 }}
             >
-                <FlatList
-                    data={defaultRoutines}
-                    keyExtractor={(routine) => routine.id.toString()}
-                    showsVerticalScrollIndicator={false}
+                <View>
+                    <Text style={{
+                        ...routineStyles.titleScreen,
+                        top: top + 15,
+                        marginBottom: top + 15,
+                        paddingBottom: 15,
+                    }}>
+                        ROUTINES
+                    </Text>
 
-                    // * Header del FlatList
-                    ListHeaderComponent={(
-                        <Text
-                            style={{
-                                ...appStyles.title,
-                                ...appStyles.glovalMargin,
-                                top: top + 15,
-                                marginBottom: top + 15,
-                                paddingBottom: 15,
-                            }}
-                        >
-                            ROUTINES
-                        </Text>
-                    )}
+                    <FlatList
+                        data={defaultRoutines}
+                        keyExtractor={(routine) => routine.id!.toString()}
+                        showsVerticalScrollIndicator={false}
 
-                    renderItem={({ item }) => <RoutineCard routine={item} />}
-                />
+                        // * Header del FlatList
+                        // ListHeaderComponent={(
+                        //     <Text
+                        //         style={{
+                        //             ...appStyles.title,
+                        //             ...appStyles.glovalMargin,
+                        //             top: top + 15,
+                        //             // marginBottom: top + 15,
+                        //             paddingBottom: 15,
+                        //         }}
+                        //     >
+                        //         ROUTINES
+                        //     </Text>
+                        // )}
+
+                        // * Configuracio del 'Infinite Scroll'
+                        onEndReached={getDefaultRoutines}
+                        onEndReachedThreshold={0.4}
+
+                        renderItem={({ item }) => <RoutineCard routine={item} />}
+                    />
+                </View>
             </View>
         </>
     );
@@ -141,4 +156,11 @@ const routineStyles = StyleSheet.create({
     container: {
         alignItems: 'center',
     },
+    titleScreen: {
+        alignSelf: 'flex-start',
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'black',
+        paddingHorizontal: 15,
+    }
 });

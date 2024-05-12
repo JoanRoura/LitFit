@@ -16,9 +16,9 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackRoutine = () => {
   return (
     <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
       <Stack.Screen name="RoutineScreen" component={RoutineScreen} />
       <Stack.Screen name="RoutineDetailsScreen" component={RoutineDetailsScreen} />
